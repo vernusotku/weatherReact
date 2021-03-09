@@ -1,0 +1,86 @@
+<!-- Создать страницу, которая реализует показ прогноза погоды на день.
+Суточный прогноз погоды состоит из четырех карточек, расположенных линейно (утро / день / вечер / ночь). 
+Прогноз погоды формируется при помощи заранее заданного объекта, и имеет четыре свойства: morning, day, evening, night.
+В каждом времени суток отображается температура, возможные осадки и соответствующая погодная иконка.
+Работу прикрепить ссылкой на git-репозиторий -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+    <style>
+        body{
+            background-color: grey;
+            background-size: auto;
+        }
+    </style>
+</head>
+<body>
+    <my-app id='Weather'></my-app>
+    <script type='text/babel'>
+        const weather = {
+            'Немного облачно':'weather/cloud.svg',
+            'Солнечно':'weather/sun.svg',
+            'Облачно':'weather/cloudy.svg',
+            'Дождь':'weather/rain.svg'
+        }
+        class Weather_Card extends React.Component{
+            
+            render(){
+                const Times_of_Day = {
+                    'Солнечно Утро': 'https://s.0564.ua/section/newsInternalIcon/upload/images/news/icon/000/053/185/oblacnost-i-solnce_604510016741b.jpg',
+                    'Немного облачно День':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmYmKU1arRxDszNm4zMw1Dt72_Vx8ZqKfTNg&usqp=CAU',
+                    'Облачно Вечер':'https://image.freepik.com/free-photo/beautiful-stormy-sunset-sky-cloudy-abstract-background-sunset-colors_221513-94.jpg',
+                    'Дождь Ночь':'https://img.freepik.com/free-photo/background-rain_49683-884.jpg?size=626&ext=jpg'
+
+                }
+                const style = {
+                    'height': '85px',
+                    'width' : '200px',
+                    'borderRadius': "15px",
+                    'border': '2px solid black',
+                    'margin': 12,
+                    'backgroundImage':`url('${Times_of_Day[this.props.weather + ' ' +  this.props.name]}')`,
+                    'backgroundSize':'auto',
+                    'display':'flex',
+                    'justifyContent': 'space-beetwen'
+                };
+                const styleContainer = {
+                    'fontWeight':'bold',
+                    'fontStretch':'condensed',
+                    'fontSize':'15px',
+                    'color':'#ff4d00'
+                };
+                const styleElementCard = {
+                    'backgroundColors':'grey',
+                    'margin':'2px'
+                }
+
+                return (
+                    <div className="Weather" style={style} >                    
+                        <div style={styleContainer} >
+                            
+                            <div style={styleElementCard} >Температура: {this.props.temp} °C </div>
+                        </div>
+                        <div style={styleContainer}>
+                            <img width='25px' src={weather[this.props.weather]}/>
+                            <div style={styleElementCard} /> Осадки: {this.props.weather} </div>
+                    </div>
+                )
+            };
+        };
+        ReactDOM.render(
+            <div>
+                <Weather_Card name='Утро' temp='15' weather='Солнечно' /> 
+                <Weather_Card name='День' temp='24' weather='Немного облачно' /> 
+                <Weather_Card name='Вечер' temp='20' weather='Облачно' /> 
+                <Weather_Card name='Ночь' temp='16' weather='Дождь'/>
+            </div>, document.getElementById('Weather'))
+    </script>
+</body>
+</html>
